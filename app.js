@@ -8,7 +8,20 @@ const orderRoutes = require('./api/routes/order')
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false })); // true allows you to parse extended bodies rich data
-app.use(bodyParser.json()); 
+app.use(bodyParser.json());
+
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*'); // * used for all requests
+    res.header(
+        'Access-Control-Allow-Headers',
+        'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+    );
+    if (req.method === 'OPTIONS') { // OPTIONS request method is allowed for OPTIONS requests 
+        res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
+        return res.status(200).json({});
+    }
+    next();
+});
 
 
 app.use('/products', productRoutes);

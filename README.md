@@ -12,3 +12,5 @@ body-parser
 Node.js body parsing middleware.
 
 Parse incoming request bodies in a middleware before your handlers, available under the `req.body` property.
+
+CORS Cross Origin Resource Sharing
