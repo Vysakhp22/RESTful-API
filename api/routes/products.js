@@ -17,13 +17,19 @@ router.post('/', (req, res, next) => {
         price: req.body.price
     });
     product.save()  // save method used to save product provided by mongoose. It stores the product in the database
-    .then((result) => {
-        console.log(result);
-    });
-    res.status(201).json({
-        message: 'Handling POST requests to /products',
-        createdProduct: product
-    });
+        .then((result) => {
+            console.log(result);
+            res.status(201).json({
+                message: 'Handling POST requests to /products',
+                createdProduct: product
+            });
+        }).catch((error) => {
+            console.log(error);
+            res.status(500).json({
+                message: 'Error saving product',
+                error: error
+            });
+        });
 });
 
 router.get('/:productId', (req, res, next) => {
