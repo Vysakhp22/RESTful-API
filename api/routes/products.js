@@ -8,8 +8,14 @@ router.get('/', (req, res, next) => {
     Product.find()
         .exec()
         .then((docs) => {
-            console.log(docs);
-            res.status(200).json(docs)
+            if (docs?.length > 0) {
+                console.log(docs);
+                res.status(200).json(docs)
+            } else { // else is not necessary because when there is no data found then we will not receive any data 
+                res.status(404).json({
+                    message: 'No entries found'
+                });
+            }
         })
         .catch((err) => {
             console.log(err);
