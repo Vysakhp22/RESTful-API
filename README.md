@@ -14,3 +14,6 @@ Node.js body parsing middleware.
 Parse incoming request bodies in a middleware before your handlers, available under the `req.body` property.
 
 CORS Cross Origin Resource Sharing
+
+Mongoose
+Mongoose is a Node.js-based Object Data Modeling (ODM) library for MongoDB
