@@ -75,7 +75,7 @@ router.patch('/:productId', (req, res, next) => {
         .exec()
         .then((result) => {
             res.status(200).json(result);
-        }) 
+        })
         .catch(err => {
             console.error(err);
             res.status(500).json({
@@ -87,15 +87,15 @@ router.patch('/:productId', (req, res, next) => {
 router.delete('/:productId', (req, res, next) => {
     const id = req.params.productId;
     Product.deleteOne({ _id: id })  //instead of remvove() here deleteOne() is used
-    .exec()
-    .then((result) =>{
-        console.log(result);
-        res.status(200).json(result);   
-    })
-    .catch(err =>{
-        console.log(err);
-        res.status(500).json({ error: err });
-    });
+        .exec()
+        .then((result) => {
+            console.log(result);
+            res.status(200).json(result);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ error: err });
+        });
 });
 
 module.exports = router;
