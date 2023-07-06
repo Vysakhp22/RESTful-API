@@ -74,7 +74,7 @@ router.get('/:orderId', (req, res, next) => {
     Order.findById(req.params.orderId).exec()
         .then(order => {
             if (!order) {
-                res.status(404).json({
+                return res.status(404).json({
                     message: 'order not found'
                 });
             }
