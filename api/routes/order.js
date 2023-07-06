@@ -19,7 +19,7 @@ router.get('/', (req, res, next) => {
                     quantity: doc.quantity,
                     request: {
                         type: 'GET',
-                        url: 'http://localhost:3000/order/' + doc._id
+                        url: 'http://localhost:3000/orders/' + doc._id
                     }
                 }))
             });
@@ -35,7 +35,7 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
     Product.findById(req.body.productId)
         .then((product) => {
-            if (!product) {
+            if (!product) { //checking there exist a valid product, if a product exist then only can create an order
                 return res.status(404).json({
                     error: 'Product not found'
                 });
@@ -58,7 +58,7 @@ router.post('/', (req, res, next) => {
                 },
                 request: {
                     type: 'GET',
-                    url: 'http://localhost:3000/order/' + result._id
+                    url: 'http://localhost:3000/orders/' + result._id
                 }
             });
         })
@@ -71,10 +71,26 @@ router.post('/', (req, res, next) => {
 });
 
 router.get('/:orderId', (req, res, next) => {
-    res.status(200).json({
-        message: 'Order details',
-        id: req.params.orderId
-    });
+    Order.findById(req.params.orderId).exec()
+        .then(order => {
+            if (!order) {
+                res.status(404).json({
+                    message: 'order not found'
+                });
+            }
+            res.status(200).json({
+                order: order,
+                request: {
+                    type: "GET",
+                    url: "http://localhost:3000/orders"
+                }
+            });
+        })
+        .catch(err => {
+            res.status(500).json({
+                error: err
+            });
+        });
 });
 router.post('/:orderId', (req, res, next) => {
     res.status(200).json({
@@ -84,10 +100,24 @@ router.post('/:orderId', (req, res, next) => {
 });
 
 router.delete('/:orderId', (req, res, next) => {
-    res.status(200).json({
-        message: 'Order deleted',
-        id: req.params.orderId
-    });
+    const id = req.params.orderId
+    Order.deleteOne({ _id: id }).exec()
+        .then(result => {
+            res.status(200).json({
+                message: 'Order deleted',
+                request: {
+                    type: 'POST',
+                    url: "http://localhost:3000/orders",
+                    body: { productId: 'ID', quantity: 'Number' }
+                }
+            });
+        })
+        .catch(err => {
+            res.status(500).json({
+                error: err
+            });
+        });
+
 });
 
 module.exports = router;
