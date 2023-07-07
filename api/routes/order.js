@@ -9,6 +9,7 @@ const Product = require('../models/product');
 router.get('/', (req, res, next) => {
     Order.find()
         .select('product quantity _id')
+        .populate('product', 'product')  //used to dispaly the connected product details, 2nd argument used to select the which property need to display
         .exec()
         .then(docs => {
             res.status(200).json({
@@ -71,7 +72,9 @@ router.post('/', (req, res, next) => {
 });
 
 router.get('/:orderId', (req, res, next) => {
-    Order.findById(req.params.orderId).exec()
+    Order.findById(req.params.orderId)
+        .populate('product')
+        .exec()
         .then(order => {
             if (!order) {
                 return res.status(404).json({
