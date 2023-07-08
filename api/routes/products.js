@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
 
 const fileFilter = (req, file, cb) => {
     if (file.mimetype === 'image/png' || file.mimetype === 'image/jpeg') {
-        cb(null, true);// callback set to true to accept the file, to send error message add error insted of null
+        cb(null, true);// callback set to true to accept the file, to send error message add error instead of null
     }
     else {
         cb(new Error('file not supported'), false);// callback set to false to ignore the file  
