@@ -17,3 +17,6 @@ CORS Cross Origin Resource Sharing
 
 Mongoose: 
 Mongoose is a Node.js-based Object Data Modeling (ODM) library for MongoDB
+
+multer package
+it able to parse incoming bodies, can parse form data. used to handle multipart/formdata
