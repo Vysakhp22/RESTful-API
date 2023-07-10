@@ -31,7 +31,7 @@ const Product = require('../models/product');
 
 router.get('/', (req, res, next) => {
     Product.find()
-        .select('product price _id') // select used for select particular items. select takes only one parameter
+        .select('product price _id productImage') // select used for select particular items. select takes only one parameter
         .exec()
         .then((docs) => {
             if (docs?.length > 0) {
@@ -41,6 +41,7 @@ router.get('/', (req, res, next) => {
                         _id: doc._id,
                         name: doc.product,
                         price: doc.price,
+                        productImage: doc.productImage,
                         request: {
                             type: 'GET',
                             url: "http://localhost:3000/products/" + doc._id
@@ -65,7 +66,8 @@ router.post('/', upload.single('productImage'), (req, res, next) => { //single u
     const product = new Product({
         _id: new mongoose.Types.ObjectId(),
         product: req.body.name,
-        price: req.body.price
+        price: req.body.price,
+        productImage: req.file.path
     });
     product.save()  // save method used to save product provided by mongoose. It stores the product in the database
         .then((result) => {
