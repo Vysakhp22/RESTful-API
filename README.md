@@ -20,3 +20,6 @@ Mongoose is a Node.js-based Object Data Modeling (ODM) library for MongoDB
 
 multer package
 it able to parse incoming bodies, can parse form data. used to handle multipart/formdata
+
+bcrypt 
+Package added used to hash the password in a secure way
