@@ -18,6 +18,7 @@ mongoose.connect('mongodb+srv://node-shop:' + process.env.MONGO_ATLAS_PW +
 mongoose.Promise = global.Promise; // default nodejs promise (used to avoid warnings)
 
 app.use(morgan('dev'));
+app.use('/uploads',express.static('uploads')) // it makes the folder stactic and publically available
 app.use(bodyParser.urlencoded({ extended: false })); // true allows you to parse extended bodies rich data
 app.use(bodyParser.json());
 
