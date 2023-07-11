@@ -6,11 +6,12 @@ const bcrypt = require('bcrypt');
 const User = require('../models/user');
 
 router.post('/signup', (req, res, next) => {
+    //checking user already exist
     User.find({ email: req.body.email })
         .exec()
         .then(v => {
-            if (v) {
-                return res.status(409).json({
+            if (v.length) { //check the length because the varible not going to null so need to check length
+                return res.status(409).json({ //if exist return
                     message: "User Already Exist"
                 });
             } else {
