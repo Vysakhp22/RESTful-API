@@ -1,5 +1,7 @@
 # RESTful-API
 REST API learning with mongodb
+This is just a smaple API for leaning node, express, mongodb
+In this we can create products, create orders and User authorisation and login is possible
 
 Automatically reloading using nodemon
 
