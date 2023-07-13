@@ -4,9 +4,10 @@ const mongoose = require('mongoose');
 
 const Order = require('../models/order');
 const Product = require('../models/product');
+const checkAuth = require('../middleware/check-aut');
 
 
-router.get('/', (req, res, next) => {
+router.get('/', checkAuth, (req, res, next) => {
     Order.find()
         .select('product quantity _id')
         .populate('product', 'product')  //used to dispaly the connected product details, 2nd argument used to select the which property need to display
@@ -33,7 +34,7 @@ router.get('/', (req, res, next) => {
         });
 });
 
-router.post('/', (req, res, next) => {
+router.post('/', checkAuth, (req, res, next) => {
     Product.findById(req.body.productId)
         .then((product) => {
             if (!product) { //checking there exist a valid product, if a product exist then only can create an order
@@ -71,7 +72,7 @@ router.post('/', (req, res, next) => {
         });
 });
 
-router.get('/:orderId', (req, res, next) => {
+router.get('/:orderId', checkAuth, (req, res, next) => {
     Order.findById(req.params.orderId)
         .populate('product')
         .exec()
@@ -95,7 +96,7 @@ router.get('/:orderId', (req, res, next) => {
             });
         });
 });
-router.post('/:orderId', (req, res, next) => {
+router.post('/:orderId', checkAuth, (req, res, next) => {
     res.status(200).json({
         message: 'Order details',
         id: req.params.orderId
