@@ -23,3 +23,6 @@ it able to parse incoming bodies, can parse form data. used to handle multipart/
 
 bcrypt 
 Package added used to hash the password in a secure way
+
+jsonwebtoken
+Package added to generate token and for authorisation
